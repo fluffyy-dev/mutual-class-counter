@@ -1,0 +1,82 @@
+{% extends "base.html" %} 
+
+
+{% block title %} Mutual Class Counter {% endblock %}
+
+{% block content %}
+
+    <p>Upload classes data excel file.</p>
+    <input type="file" id="classDataUpload" name="classDataUpload" accept=".xlsx" />
+    <button type="button" id="submitFile" name="submitFile">Analyze</button>
+    
+    <dl id="results">
+
+    </dl>
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+
+                    if (cookie.startsWith(name + "=")) {
+                        cookieValue = decodeURIComponent(
+                        cookie.substring(name.length + 1)
+                        );
+                        break;
+                    }
+                }
+            }
+
+            return cookieValue;
+        }
+
+        document.getElementById("submitFile").addEventListener("click", async function() {
+            const gottenInput = document.getElementById("classDataUpload").files[0];
+
+            if (!gottenInput) {
+                alert("No File.")
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("classDataUpload", gottenInput);
+            
+            const send = await fetch('/get-moots/', {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: formData,
+            });
+
+            const done = await send.json();
+
+            const list = document.getElementById("results")
+
+            for (const person of done.result.split(" | ")) {
+                const classNum = person.split("(")[1].split(") ")[0];
+                const name = person.split(") ")[1].split(": ")[0];
+                const mootList = person.split("[")[1].split("]")[0].split(", ");
+
+                var newPersonOnList = document.createElement("dt");
+                newPersonOnList.innerHTML = "(" + classNum + ") " + name;
+                list.appendChild(newPersonOnList);
+
+                for (const mootClass of mootList) {
+                    var newClass = document.createElement("dd");
+                    newClass.innerHTML = "- " + mootClass;
+                    list.appendChild(newClass);
+                }
+            }
+        });
+        
+    </script>
+
+
+{% endblock %}
+
