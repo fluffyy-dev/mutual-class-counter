@@ -5,5 +5,7 @@ from .views import get_moots_view
 urlpatterns = [
     path("", views.home, name="home"),
     path("mutuals/", views.mutuals, name="mutuals"),
+    path("frame-maker/", views.frame_maker, name="frame-maker"),
+
     path("get-moots/", get_moots_view, name="get_moots"),
 ]

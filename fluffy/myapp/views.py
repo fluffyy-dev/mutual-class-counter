@@ -10,10 +10,15 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def home(request):
     return render(request, "home.html")
 
+def og_home(request):
+    return render(request, "og-home.html")
+
+def frame_maker(request):
+    return render(request, "frame-maker.html")
+
 @ensure_csrf_cookie
 def mutuals(request):
     return render(request, "mutuals.html")
-
 
 @ensure_csrf_cookie
 def get_moots_view(upload):
