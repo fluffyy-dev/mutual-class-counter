@@ -5,9 +5,18 @@
 
 {% block content %}
 
-    <p>Home pageee</p>
+    <h2>Home page</h2>
+
+    <div>
+        <h4>Newest thingy</h4>
+
+        <button type="button"><a class="nav-link" href="{% url 'mutuals' %}">Flower Game</a></button>
+    </div>
+
+    <h4>Other Projects</h4>
     <button type="button"><a class="nav-link" href="{% url 'mutuals' %}">Mutuals</a></button>
     <button type="button"><a class="nav-link" href="{% url 'frame-maker' %}">Frame Maker</a></button>
+    <button type="button"><a class="nav-link" href="{% url 'to-do' %}">To-Do List</a></button>
 
 {% endblock %}
 

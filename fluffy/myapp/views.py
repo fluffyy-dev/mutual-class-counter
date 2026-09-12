@@ -13,6 +13,12 @@ def home(request):
 def og_home(request):
     return render(request, "og-home.html")
 
+def flowers(request):
+    return render(request, "flowers.html")
+
+def to_do(request):
+    return render(request, "to-do.html")
+
 def frame_maker(request):
     return render(request, "frame-maker.html")
 
